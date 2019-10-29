@@ -1,5 +1,5 @@
-#Seamus Gallivan R Take Home Assignment 1
-
+#Seamus Gallivan R Take Home Assignment 1 10/29/2019
+#Script requires use of the tidyverse package
 rm(list = ls())
 cat("\014")
 date()
