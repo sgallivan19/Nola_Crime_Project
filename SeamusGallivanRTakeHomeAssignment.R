@@ -8,7 +8,6 @@ cat("\014")
 date()
 current_date <- date()
 #session info ******
-tidyverse::session_info()
 sessionInfo()
 
 #loading required library *****
