@@ -28,7 +28,7 @@ sessionInfo()
 
 #read in the nola_crime_2018 dataset#
 ```{r}
-nola_crime <- read_csv(file="/Users/seamusgallivan/Documents/nola_crime_2018.csv")
+nola_crime <- read_csv(file="nola_crime_2018.csv")
 ```
 #Question 1 and 2#
 ```{r}
@@ -66,8 +66,9 @@ nola_crime %>%
 #Question 6#
 ```{r}
 nola_crime <- nola_crime %>% mutate(
-  crime_rate = (unique_item_numbers / pop) * 1000
+  crime_rate = (unique_item_numbers *1000/ pop)
 )
+#multiply numerator by 1000
 nola_crime %>%
   select(pop,unique_item_numbers,crime_rate,GNOCDC_LAB) %>%
   distinct(GNOCDC_LAB, .keep_all = TRUE) 
@@ -75,6 +76,7 @@ nola_crime %>%
   group_by(GNOCDC_LAB) %>%
   select(GNOCDC_LAB,crime_rate) %>%
   distinct(GNOCDC_LAB, crime_rate)
+
 ```
 
 #Question 7#
@@ -104,6 +106,8 @@ nola_crime <- nola_crime %>%
 nola_crime %>%
   select(GNOCDC_LAB, rate_ratio) %>%
   distinct(GNOCDC_LAB, rate_ratio)
+
+#just need to adjust crime rate calculated previously
 ```
 #Question 10#
 ```{r}
@@ -152,6 +156,7 @@ nola_crime1 <- nola_crime1 %>%
 nola_crime1 %>%
   select(GNOCDC_LAB, dom_dist_rate) %>%
   distinct(GNOCDC_LAB, dom_dist_rate)
+#decimal point issue
 ```
 #Question 13#
 ```{r}
@@ -159,10 +164,13 @@ nola_crime2 <- nola_crime %>%
   group_by(GNOCDC_LAB,crime_rate) %>% 
   select(GNOCDC_LAB,crime_rate,Victim_Age) %>%
   summarize(m = mean(Victim_Age, na.rm = TRUE))
+
+
 nola_crime2
   linearreg <- lm(m ~ crime_rate, data = nola_crime2)
   print(linearreg)
   summary(linearreg)
+ #reversed order of arguments in model. 
 ```
 #Question 14#
 ```{r}
@@ -199,6 +207,7 @@ stat_smooth(method = "lm",
         size = 1)
 linearmodel <- lm(disp ~ mpg, data = mtcars)
 mtcarsplot
+#change axes since question asks for mpg vs. disp so mpg on the y-axis and disp on the x-axis
 summary(linearmodel)
 ```
 #Question 18#
@@ -218,7 +227,8 @@ library(raster)
 library(sf)
 library(rgeos)
 library(maptools)
-nola_map <- read_sf(dsn = "/Users/seamusgallivan/Downloads", layer = "Neighborhood_Statistical_Areas")
+nola_map <- read_sf(dsn = "./Neighborhood_Statistical_Areas", layer = "Neighborhood_Statistical_Areas")
+
 m <- merge(nola_crime, nola_map, by='GNOCDC_LAB')
 p <- colorRampPalette(c("white", "red"))(128)
 palette(p)
