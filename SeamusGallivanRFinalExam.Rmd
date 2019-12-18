@@ -28,7 +28,7 @@ sessionInfo()
 
 #read in the nola_crime_2018 dataset#
 ```{r}
-nola_crime <- read_csv(file="/Users/seamusgallivan/Documents/nola_crime_2018.csv")
+nola_crime <- read_csv(file="nola_crime_2018.csv")
 ```
 #Question 1 and 2#
 ```{r}
@@ -164,13 +164,13 @@ nola_crime2 <- nola_crime %>%
   group_by(GNOCDC_LAB,crime_rate) %>% 
   select(GNOCDC_LAB,crime_rate,Victim_Age) %>%
   summarize(m = mean(Victim_Age, na.rm = TRUE))
- #encountered an error in argument "by"
+
 
 nola_crime2
   linearreg <- lm(m ~ crime_rate, data = nola_crime2)
   print(linearreg)
   summary(linearreg)
-  #did run correctly, nola_crime2 was not found
+ #reversed order of arguments in model. 
 ```
 #Question 14#
 ```{r}
@@ -227,7 +227,7 @@ library(raster)
 library(sf)
 library(rgeos)
 library(maptools)
-nola_map <- read_sf(dsn = "/Users/seamusgallivan/Downloads", layer = "Neighborhood_Statistical_Areas")
+nola_map <- read_sf(dsn = "./Neighborhood_Statistical_Areas", layer = "Neighborhood_Statistical_Areas")
 
 m <- merge(nola_crime, nola_map, by='GNOCDC_LAB')
 p <- colorRampPalette(c("white", "red"))(128)
