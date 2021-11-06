@@ -30,19 +30,19 @@ sessionInfo()
 ```{r}
 nola_crime <- read_csv(file="/Users/seamusgallivan/Documents/nola_crime_2018.csv")
 ```
-#Question 1 and 2#
+#How many observations and variables in the dataset?#
 ```{r}
 str(nola_crime)
 ```
 #Observations = 9970, Variables = 24#
 
-#Question 3#
+#How many unique crimes occurred?#
 ```{r}
 length(unique(nola_crime$Item_Number))
 ```
 #9384 unique item numbers#
 
-#Question 4#
+#How many aggravated crimes were reports in the Irish Channel?#
 ```{r}
 nola_crime %>% 
   select(GNOCDC_LAB, Signal_Description, Item_Number) %>%
@@ -51,7 +51,7 @@ filter(GNOCDC_LAB=="IRISH CHANNEL")
 ```
 #1 Aggravated Crime in The Irish Channel Neighorhood#
 
-#Question 5#
+#Which neighborhoods featured the most crime reports?#
 ```{r}
 nola_crime <- nola_crime %>% 
   group_by(GNOCDC_LAB) %>%
@@ -77,7 +77,7 @@ nola_crime %>%
   distinct(GNOCDC_LAB, crime_rate)
 ```
 
-#Question 7#
+#What is the largest neighborhood by population in New Orleans?#
 ```{r}
 nola_crime %>%
   select(GNOCDC_LAB, pop) %>%
@@ -85,7 +85,7 @@ nola_crime %>%
 ```
 #Largest neighborhood by population = LITTLE WOODS, population = 44947#
 
-#Question 8#
+#Which neighborhood had the lowest crime rate?#
 ```{r}
 nola_crime %>%
   select(pop, unique_item_numbers, GNOCDC_LAB, crime_rate) %>%
@@ -130,7 +130,7 @@ nola_crime1 %>%
   select(agg_rate_ratio, GNOCDC_LAB) %>%
   distinct(agg_rate_ratio, GNOCDC_LAB)
 ```
-#Question 11#
+#What was the most common cause for a police report and what was the most common charge filed?#
 ```{r}
 mfv(nola_crime$Signal_Description)
 mfv(nola_crime$Charge_Description, na_rm = TRUE)
